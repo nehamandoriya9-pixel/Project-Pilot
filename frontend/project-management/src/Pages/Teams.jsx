@@ -22,6 +22,14 @@ import {
   IoSave
 } from "react-icons/io5";
 
+// Environment-based API configuration
+const getApiUrl = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return window.location.origin;
+  }
+  return process.env.REACT_APP_API_URL || 'http://localhost:5000';
+};
+
 const Teams = () => {
   const { teamId } = useParams();
   const [teams, setTeams] = useState([]);
@@ -46,7 +54,7 @@ const Teams = () => {
   const typingTimeoutRef = useRef(null);
   const { isDarkMode } = useTheme();
 
-  // Animation variants matching ProjectDetails
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -89,15 +97,16 @@ const Teams = () => {
     }
   };
 
-  // Load teams
+  // Load teams on component mount
   useEffect(() => {
     loadTeams();
   }, []);
 
+  // Initialize socket connection
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     if (currentUser) {
-      const API_URL = 'http://localhost:5000'
+      const API_URL = getApiUrl();
       socketRef.current = io(API_URL, {
         auth: {
           token: localStorage.getItem('token')
@@ -124,6 +133,7 @@ const Teams = () => {
     }
   }, []);
 
+  // Handle team room changes
   useEffect(() => {
     if (socketRef.current && activeTeam) {
       socketRef.current.emit('leave_team_room');
@@ -132,9 +142,11 @@ const Teams = () => {
     }
   }, [activeTeam]);
 
+  // Set up socket event listeners
   const setupTeamSocketListeners = () => {
     if (!socketRef.current || !activeTeam) return;
 
+    // Remove existing listeners
     socketRef.current.off('new_message');
     socketRef.current.off('message_updated');
     socketRef.current.off('message_deleted');
@@ -146,6 +158,7 @@ const Teams = () => {
     socketRef.current.off('team_updated');
     socketRef.current.off('new_activity');
 
+    // Add new listeners
     socketRef.current.on('new_message', (message) => {
       setMessages(prev => [...prev, message]);
       scrollToBottom();
@@ -198,8 +211,9 @@ const Teams = () => {
     socketRef.current.on('new_activity', (activity) => {
       setActivities(prev => [activity, ...prev]);
     });
-  }
+  };
 
+  // Load team data when teamId or activeTab changes
   useEffect(() => {
     if (teamId) {
       loadTeamDetails(teamId);
@@ -208,6 +222,7 @@ const Teams = () => {
     }
   }, [teamId, activeTeam, activeTab]);
 
+  // Data loading functions
   const loadTeams = async () => {
     try {
       setLoading(true);
@@ -215,7 +230,8 @@ const Teams = () => {
       setTeams(response.data.data);
       
       if (teamId) {
-        setActiveTeam(response.data.data.find(team => team._id === teamId));
+        const team = response.data.data.find(team => team._id === teamId);
+        setActiveTeam(team);
       } else if (response.data.data.length > 0) {
         setActiveTeam(response.data.data[0]);
       }
@@ -251,6 +267,8 @@ const Teams = () => {
           break;
         case 'projects':
           await loadTeamProjects();
+          break;
+        default:
           break;
       }
     } catch (error) {
@@ -299,6 +317,7 @@ const Teams = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Event handlers
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -340,21 +359,26 @@ const Teams = () => {
   };
 
   const handleCreateTeam = async (e) => {
-    if (e) e.preventDefault();
+    e.preventDefault();
+    e.stopPropagation();
     
-    const testTeamData = {
-      name: "Test Team " + Date.now(),
-      description: "Test description"
-    };
+    console.log('Creating team with data:', newTeam);
     
     try {
-      const response = await teamAPI.createTeam(testTeamData);
-      console.log('Success:', response.data);
+      const teamData = {
+        name: newTeam.name || `Team ${Date.now()}`,
+        description: newTeam.description || "No description provided"
+      };
+      
+      const response = await teamAPI.createTeam(teamData);
+      console.log('Team created successfully:', response.data);
+      
       setShowCreateModal(false);
       setNewTeam({ name: '', description: '' });
       await loadTeams();
     } catch (error) {
-      console.log('Full error object:', error);
+      console.error('Failed to create team:', error);
+      alert(`Failed to create team: ${error.response?.data?.message || error.message}`);
     }
   };
 
@@ -414,6 +438,7 @@ const Teams = () => {
     }
   };
 
+  // Helper functions
   const isCurrentUserAdmin = () => {
     if (!activeTeam || !activeTeam.members) return false;
     const currentUser = JSON.parse(localStorage.getItem('user'));
@@ -456,6 +481,7 @@ const Teams = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
+  // Loading state
   if (loading) {
     return (
       <div className={`min-h-screen flex items-center justify-center ${isDarkMode ? "bg-gray-900" : "bg-[#FFF6E0]"}`}>
@@ -468,6 +494,7 @@ const Teams = () => {
     );
   }
 
+  // No teams state
   if (!activeTeam && teams.length === 0) {
     return (
       <div className={`min-h-screen flex items-center justify-center ${isDarkMode ? "bg-gray-900" : "bg-[#FFF6E0]"}`}>
@@ -523,7 +550,11 @@ const Teams = () => {
                   ? "bg-gradient-to-br from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800" 
                   : "bg-gradient-to-br from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700"
               }`}
-              onClick={() => setShowCreateModal(true)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowCreateModal(true);
+              }}
             >
               <IoAddCircle className="w-4 h-4 mr-1 inline" />
               Create Team
@@ -1312,6 +1343,7 @@ const Teams = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
+            onClick={() => setShowCreateModal(false)}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -1320,6 +1352,7 @@ const Teams = () => {
               className={`rounded-2xl shadow-xl border backdrop-blur-sm p-8 w-full max-w-md ${
                 isDarkMode ? "bg-gray-800/80 border-gray-700" : "bg-white/80 border-amber-200"
               }`}
+              onClick={(e) => e.stopPropagation()}
             >
               <h2 className={`text-2xl font-bold mb-6 ${isDarkMode ? "text-white" : "text-gray-900"}`}>Create New Team</h2>
               <form onSubmit={handleCreateTeam}>
@@ -1399,6 +1432,7 @@ const Teams = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
+            onClick={() => setShowInviteModal(false)}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -1407,6 +1441,7 @@ const Teams = () => {
               className={`rounded-2xl shadow-xl border backdrop-blur-sm p-8 w-full max-w-md ${
                 isDarkMode ? "bg-gray-800/80 border-gray-700" : "bg-white/80 border-amber-200"
               }`}
+              onClick={(e) => e.stopPropagation()}
             >
               <h2 className={`text-2xl font-bold mb-6 ${isDarkMode ? "text-white" : "text-gray-900"}`}>Invite Team Member</h2>
               <form onSubmit={handleInviteMember}>
