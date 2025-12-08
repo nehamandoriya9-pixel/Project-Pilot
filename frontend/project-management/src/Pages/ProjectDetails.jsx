@@ -109,14 +109,14 @@ const ProjectDetails = () => {
         }
 
         // Fetch project data
-        const projectResponse = await axios.get(`http://localhost:5000/api/projects/${id}`, {
+        const projectResponse = await axios.get(`https://project-pilot-4ju2.onrender.com/api/projects/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         setProject(projectResponse.data);
 
         // Fetch tasks for this project separately
         try {
-          const tasksResponse = await axios.get(`http://localhost:5000/api/tasks/project/${id}`, {
+          const tasksResponse = await axios.get(`https://project-pilot-4ju2.onrender.com/api/tasks/project/${id}`, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
           setTasks(tasksResponse.data);
@@ -185,7 +185,7 @@ const ProjectDetails = () => {
     if (window.confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/projects/${id}`, {
+        await axios.delete(`https://project-pilot-4ju2.onrender.com/api/projects/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         navigate('/dashboard/projects');
