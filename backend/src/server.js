@@ -10,13 +10,14 @@ import projectRoutes from './routes/projects.js';
 import userRoutes from './routes/users.js';
 import taskRoutes from './routes/tasks.js';
 import teamRoutes from './routes/teams.js';
-// import path from "path";
+import path from "path";
 
 dotenv.config();
 
 const app = express();
 const server = createServer(app);
-// const _dirname = path.resolve();
+
+const _dirname = path.resolve();
 
 // Socket.IO setup
 const io = new Server(server, {
@@ -92,10 +93,10 @@ app.use('/api/users', userRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/teams', teamRoutes);
 
-// app.use(express.static(path.join(_dirname, "/frontend/project-management/dist")));
-// app.get(/.*/, (_,res) => {
-//   res.sendFile(path.resolve(_dirname, "frontend/project-management", "dist", "index.html"));
-// })
+app.use(express.static(path.join(_dirname, "/frontend/project-management/dist")));
+app.get(/.*/, (_,res) => {
+  res.sendFile(path.resolve(_dirname, "frontend/project-management", "dist", "index.html"));
+})
 
 // Welcome route
 app.get('/', (req, res) => {

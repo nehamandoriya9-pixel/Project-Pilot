@@ -4,9 +4,9 @@
   "description": "",
   "types": "module",
   "scripts": {  
-    "dev": "nodemon  src/server.js",
-    "start": "node  src/server.js"
-    
+    "dev": "nodemon backend/src/server.js",
+    "start": "nodemon backend/src/server.js",
+    "build": "npm install && npm install --prefix frontend/project-management && npm run build --prefix frontend/project-management" 
   },
   "keywords": [],
   "author": "",
