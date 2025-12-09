@@ -131,7 +131,7 @@ const Profile = () => {
         });
 
         if (userData.avatar) {
-          setAvatarPreview(`http://localhost:5000${userData.avatar}`);
+          setAvatarPreview(`https://project-pilot-l9m1.onrender.com${userData.avatar}`);
         } else {
           // Use the user's initial as fallback
           const initial = userData.name

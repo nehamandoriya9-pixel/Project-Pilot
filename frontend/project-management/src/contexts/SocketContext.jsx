@@ -17,7 +17,7 @@ export const SocketProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const newSocket = io('https://project-pilot-4ju2.onrender.com', {
+    const newSocket = io('https://project-pilot-l9m1.onrender.com', {
       auth: {
         token: localStorage.getItem('token')
       }
