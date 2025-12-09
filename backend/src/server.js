@@ -22,7 +22,7 @@ const _dirname = path.resolve();
 // Socket.IO setup
 const io = new Server(server, {
   cors: {
-    origin: "https://project-pilot-l9m1.onrender.com",
+    origin: "https://project-pilot-1-6k3l.onrender.com",
     methods: ["GET", "POST"],
     credentials: true
   },

@@ -109,7 +109,7 @@ const EditProject = () => {
       try {
         setLoading(true);
         const token = localStorage.getItem('token');
-        const response = await axios.get(`https://project-pilot-l9m1.onrender.com/api/projects/${id}`, {
+        const response = await axios.get(`https://project-pilot-1-6k3l.onrender.com/api/projects/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -198,7 +198,7 @@ const EditProject = () => {
         ...(formData.client && { client: formData.client.trim() })
       };
 
-      await axios.put(`https://project-pilot-l9m1.onrender.com/api/projects/${id}`, projectData, {
+      await axios.put(`https://project-pilot-1-6k3l.onrender.com/api/projects/${id}`, projectData, {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

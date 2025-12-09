@@ -106,7 +106,7 @@ const TaskDetails = () => {
           return;
         }
 
-        const response = await axios.get(`https://project-pilot-l9m1.onrender.com/api/tasks/${id}`, {
+        const response = await axios.get(`https://project-pilot-1-6k3l.onrender.com/api/tasks/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -134,7 +134,7 @@ const TaskDetails = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await axios.get(`https://project-pilot-l9m1.onrender.com/api/tasks/${id}`, {
+      const response = await axios.get(`https://project-pilot-1-6k3l.onrender.com/api/tasks/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTask(response.data);
@@ -151,7 +151,7 @@ const TaskDetails = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `https://project-pilot-l9m1.onrender.com/api/tasks/${id}`,
+        `https://project-pilot-1-6k3l.onrender.com/api/tasks/${id}`,
         { status: newStatus },
         {
           headers: {
@@ -176,7 +176,7 @@ const TaskDetails = () => {
       setActionLoading(true);
       const token = localStorage.getItem('token');
       
-      await axios.delete(`https://project-pilot-l9m1.onrender.com/api/tasks/${id}`, {
+      await axios.delete(`https://project-pilot-1-6k3l.onrender.com/api/tasks/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -201,7 +201,7 @@ const TaskDetails = () => {
       const user = JSON.parse(localStorage.getItem('user'));
 
       const response = await axios.put(
-        `https://project-pilot-l9m1.onrender.com/api/tasks/${id}`,
+        `https://project-pilot-1-6k3l.onrender.com/api/tasks/${id}`,
         { 
           assignedTo: user.id,
           assigneeName: user.name 
@@ -229,7 +229,7 @@ const TaskDetails = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        `https://project-pilot-l9m1.onrender.com/api/tasks/${id}/comments`,
+        `https://project-pilot-1-6k3l.onrender.com/api/tasks/${id}/comments`,
         { content: newComment },
         {
           headers: {

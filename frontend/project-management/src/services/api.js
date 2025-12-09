@@ -1,7 +1,7 @@
 // services/api.js - ENHANCED VERSION
 import axios from 'axios';
 
-const API_URL = 'https://project-pilot-l9m1.onrender.com/api';
+const API_URL = 'https://project-pilot-1-6k3l.onrender.com/api';
 
 // Create axios instance
 const api = axios.create({

@@ -89,7 +89,7 @@ const CreateTask = () => {
 
         // Fetch projects
         const projectsResponse = await axios.get(
-          "https://project-pilot-l9m1.onrender.com/api/projects",
+          "https://project-pilot-1-6k3l.onrender.com/api/projects",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -98,7 +98,7 @@ const CreateTask = () => {
 
         // Fetch users
         const usersResponse = await axios.get(
-          "https://project-pilot-l9m1.onrender.com/api/users",
+          "https://project-pilot-1-6k3l.onrender.com/api/users",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -108,7 +108,7 @@ const CreateTask = () => {
         // If in edit mode, fetch task data
         if (isEditMode) {
           const taskResponse = await axios.get(
-            `https://project-pilot-l9m1.onrender.com/api/tasks/${id}`,
+            `https://project-pilot-1-6k3l.onrender.com/api/tasks/${id}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -273,7 +273,7 @@ const CreateTask = () => {
 
       if (isEditMode) {
         response = await axios.put(
-          `https://project-pilot-l9m1.onrender.com/api/tasks/${id}`,
+          `https://project-pilot-1-6k3l.onrender.com/api/tasks/${id}`,
           taskData,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -281,7 +281,7 @@ const CreateTask = () => {
         );
       } else {
         response = await axios.post(
-          "https://project-pilot-l9m1.onrender.com/api/tasks",
+          "https://project-pilot-1-6k3l.onrender.com/api/tasks",
           taskData,
           {
             headers: { Authorization: `Bearer ${token}` },

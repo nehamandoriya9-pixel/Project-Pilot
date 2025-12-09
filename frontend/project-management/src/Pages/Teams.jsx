@@ -97,7 +97,7 @@ const Teams = () => {
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     if (currentUser) {
-      const API_URL = 'https://project-pilot-l9m1.onrender.com'
+      const API_URL = 'https://project-pilot-1-6k3l.onrender.com'
       socketRef.current = io(API_URL, {
         auth: {
           token: localStorage.getItem('token')
