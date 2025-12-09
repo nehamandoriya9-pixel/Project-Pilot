@@ -10,7 +10,7 @@ export const useSocket = (teamId) => {
   useEffect(() => {
     if (!teamId) return;
 
-    const newSocket = io('https://project-pilot-4ju2.onrender.com', {
+    const newSocket = io('https://project-pilot-l9m1.onrender.com', {
       withCredentials: true
     });
 
