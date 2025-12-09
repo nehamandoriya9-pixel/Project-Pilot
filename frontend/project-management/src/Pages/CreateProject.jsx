@@ -100,10 +100,10 @@ const CreateProject = () => {
         }
 
         const [usersResponse, teamsResponse] = await Promise.all([
-          axios.get('https://project-pilot-4ju2.onrender.com/api/users', {
+          axios.get('http://localhost:5000/api/users', {
             headers: { Authorization: `Bearer ${token}` }
           }),
-          axios.get('https://project-pilot-4ju2.onrender.com/api/teams/my-teams', {
+          axios.get('http://localhost:5000/api/teams/my-teams', {
             headers: { Authorization: `Bearer ${token}` }
           })
         ]);
@@ -209,7 +209,7 @@ const CreateProject = () => {
         ...(formData.client && { client: formData.client.trim() })
       };
 
-      const response = await axios.post('https://project-pilot-4ju2.onrender.com/api/projects', projectData, {
+      const response = await axios.post('http://localhost:5000/api/projects', projectData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'

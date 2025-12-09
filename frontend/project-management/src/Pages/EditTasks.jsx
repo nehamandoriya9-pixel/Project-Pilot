@@ -102,7 +102,7 @@ const EditTask = () => {
         }
 
         // Fetch task details
-        const taskResponse = await axios.get(`https://project-pilot-4ju2.onrender.com/api/tasks/${id}`, {
+        const taskResponse = await axios.get(`http://localhost:5000/api/tasks/${id}`, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -117,10 +117,10 @@ const EditTask = () => {
 
         // Fetch projects and users in parallel
         const [projectsResponse, usersResponse] = await Promise.all([
-          axios.get('https://project-pilot-4ju2.onrender.com/api/projects', {
+          axios.get('http://localhost:5000/api/projects', {
             headers: { Authorization: `Bearer ${token}` }
           }),
-          axios.get('https://project-pilot-4ju2.onrender.com/api/users', {
+          axios.get('http://localhost:5000/api/users', {
             headers: { Authorization: `Bearer ${token}` }
           })
         ]);
@@ -241,7 +241,7 @@ const EditTask = () => {
       console.log('Updating task with data:', taskData);
 
       const response = await axios.put(
-        `https://project-pilot-4ju2.onrender.com/api/tasks/${id}`,
+        `http://localhost:5000/api/tasks/${id}`,
         taskData,
         {
           headers: { 
