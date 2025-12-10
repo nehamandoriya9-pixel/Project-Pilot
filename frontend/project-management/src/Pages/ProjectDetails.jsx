@@ -109,7 +109,7 @@ const ProjectDetails = () => {
         }
 
         // Fetch project data
-        const projectResponse = await axios.get(`https://project-pilot-1-6k3l.onrender.com/${id}`, {
+        const projectResponse = await axios.get(`https://project-pilot-1-6k3l.onrender.com/api/projects/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         setProject(projectResponse.data);
