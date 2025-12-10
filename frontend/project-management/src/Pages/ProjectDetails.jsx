@@ -185,7 +185,7 @@ const ProjectDetails = () => {
     if (window.confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`https://project-pilot-1-6k3l.onrender.com/${id}`, {
+        await axios.delete(`https://project-pilot-1-6k3l.onrender.com/api/projects/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         navigate('/dashboard/projects');
