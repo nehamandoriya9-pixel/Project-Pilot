@@ -30,14 +30,14 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App h-screen overflow-hidden">
       
       <Routes>
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
         
         {/* Dashboard Layout Routes */}
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} >
           <Route index element={<DashboardHome />} />
           <Route path="projects" element={<Projects />} />
           <Route path="projects/new" element={<CreateProject />} />

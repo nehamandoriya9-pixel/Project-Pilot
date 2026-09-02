@@ -8,11 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-<<<<<<< HEAD
-
-=======
 .env
->>>>>>> 5617694 (Fix page scroll and layout)
 
 # Editor directories and files
 .vscode/*
@@ -24,6 +20,3 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
-
-#Ignore .env files
-.env
