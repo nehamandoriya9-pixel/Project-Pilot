@@ -96,9 +96,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/teams', teamRoutes);
 
-app.use(express.static(path.join(_dirname, "/frontend/project-management/dist")));
+app.use(express.static(path.join(_dirname, "/frontend/Frontend/project-management/dist")));
 app.get(/.*/, (_,res) => {
-  res.sendFile(path.resolve(_dirname, "frontend/project-management", "dist", "index.html"));
+  res.sendFile(path.resolve(_dirname, "frontend/Frontend/project-management", "dist", "index.html"));
 })
 
 // Welcome route
