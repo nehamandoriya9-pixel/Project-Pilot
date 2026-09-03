@@ -30,7 +30,7 @@ function App() {
   };
 
   return (
-    <div className="App h-screen overflow-hidden">
+    <div className="App">
       
       <Routes>
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
